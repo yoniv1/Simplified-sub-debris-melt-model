@@ -102,39 +102,39 @@
         daysnow = 0.
         tsnow = 0.
         eng_flux = 0.
-	snowflow = 0.
+		snowflow = 0.
         qnet_flux_out = 0.
         qnet_deb = 0.
         ta_flx_deb = 0.
-	enflux_deb = 0.
+		enflux_deb = 0.
         qc_deb = 0.
         flx_deb = 0.
         dqnet_deb = 0.
         dta_flx_deb = 0.
         dqc_deb = 0.
         dflx_deb = 0.
-	snowdep_deb = 0.
-	albedo_deb = 0.
-	snowmelt_deb = 0.
-	snowret_deb = 0.
-	runoff_deb = 0.
+		snowdep_deb = 0.
+		albedo_deb = 0.
+		snowmelt_deb = 0.
+		snowret_deb = 0.
+		runoff_deb = 0.
         G_deb = 0.
         ice_melt_deb = 0.
-	cumbal_deb = 0.
-	snowflow_deb = 0.
-	daysnow_deb = 0.
+		cumbal_deb = 0.
+		snowflow_deb = 0.
+		daysnow_deb = 0.
         Td(:) = 273.15
         Td_past(:,:,:) = 273.15
-	Td_gradient = 0.
+		Td_gradient = 0.
         a_Crank(:) = 0.
         b_Crank(:) = 0.
         c_Crank(:) = 0.
-	d_Crank(:) = 0.
-	E_Crank(:) = 0.
-	S_Crank(:) = 0.
-	n_iterations = 0.
-	vol_heat_cap_deb(:) = 0.
-	k_eff_deb(:) = 0.
+		d_Crank(:) = 0.
+		E_Crank(:) = 0.
+		S_Crank(:) = 0.
+		n_iterations = 0.
+		vol_heat_cap_deb(:) = 0.
+		k_eff_deb(:) = 0.
         Ts_past = 273.15
         lnet_deb = 0.
         shf_deb = 0.
@@ -157,7 +157,7 @@
 
        do while (it.lt.(dims+1))
 
-           !-----------------------------------------------------------------------               
+       !-----------------------------------------------------------------------               
 	   ! Calculate the solar geometry (incl. shading)
 	   !-----------------------------------------------------------------------    
 
@@ -172,7 +172,7 @@
            
            call shaderoutine(solaralt,azimuth,HT,shade) ! Call subroutine to calculate if there is shade in each grid cell from topographic shading       
                      
-           !-----------------------------------------------------------------------             
+       !-----------------------------------------------------------------------             
 	   ! Start the loop over the area
 	   !-----------------------------------------------------------------------   
 
@@ -189,9 +189,9 @@
 
                  insol=0.
                  melt=0.
-		 melt_deb=0.
+		 		 melt_deb=0.
                  runoff=0.
-		 runoff_deb=0.
+		 		 runoff_deb=0.
                  prec=0.
                  Psolid=0.
 
@@ -206,7 +206,7 @@
                     
                  !--------------------------------------------------------------------              
                  ! Calculate insolation part of the energy balance
-		 !--------------------------------------------------------------------
+		         !--------------------------------------------------------------------
 
                     ! Calculate cos(incidence angle)
                     cos_theta = sin(declination) * sin(lat_rad) * cos(slope_rad(i,j)) - &
@@ -219,7 +219,7 @@
                     inc_angle = acos(cos_theta)
 
                     ! Calculation solar radiation on sloping surface
-		    ! if shade in grid cell and solar elevation angle > 0 : Qdif 
+		            ! if shade in grid cell and solar elevation angle > 0 : Qdif 
                     if ((e_val.gt.0.).and.(shade(i,j).eq.1).or.(inc_angle.ge.(pi_value/2.0))) then
                        insol= Qdif
                     ! Else if no shade and solar elevation angle > 0 : Qdir with cos_theta
@@ -231,7 +231,7 @@
                        insol=0.                                                                                                                                                 
                     endif
 
-                    !--------------------------------------------------------------------       
+            !--------------------------------------------------------------------       
 		    ! Calculate air temperature
 		    !--------------------------------------------------------------------  
 
@@ -246,49 +246,49 @@
                         Tair = temp_data(it,1)+lapseRate_w*(ELEV_OBS(i,j,idx_noyear)-altT)
                     endif
 
-                    !--------------------------------------------------------------------  
+            !--------------------------------------------------------------------  
 		    ! Calculate precipitation
 		    !--------------------------------------------------------------------  
 
-                    ! Precipitation 3-hourly values, depending on altitude of cell         
-                    if (ELEV_OBS(i,j,idx_noyear).gt.0.) then
-			if (prec_yearly(it,1) > 0.0) then
-   				Pratio = (prec_yearly(it,1) + precRate*(ELEV_OBS(i,j,idx_noyear)-altT)) / prec_yearly(it,1)
-			else
-   				Pratio = 1.0
-			endif                       
-			prec = prec_data(it,1)*Pratio
-                    endif   
+            ! Precipitation 3-hourly values, depending on altitude of cell         
+            if (ELEV_OBS(i,j,idx_noyear).gt.0.) then
+				if (prec_yearly(it,1) > 0.0) then
+   					Pratio = (prec_yearly(it,1) + precRate*(ELEV_OBS(i,j,idx_noyear)-altT)) / prec_yearly(it,1)
+				else
+   					Pratio = 1.0
+				endif                       
+				prec = prec_data(it,1)*Pratio
+            endif   
 
 		    ! For safety, shouldn't happen
 
 		    if (prec.lt.0)then
-                        prec = 0
-                    endif	
+        	   prec = 0
+            endif	
                     
-                    !-------------------------------------------------------------------- 
+            !-------------------------------------------------------------------- 
 		    ! Calculate solid precipitation (snow)
 		    !--------------------------------------------------------------------  
 
-                    if (Tair.lt.ttresh)then
-                       Psolid = prec
-                    else
-                       Psolid = 0
-                    endif
+            if (Tair.lt.ttresh)then
+               Psolid = prec
+             else
+               Psolid = 0
+            endif
 
-                    ! Set tsnow for snow and firn albedo
+            ! Set tsnow for snow and firn albedo
 
-                    if (Psolid.gt.0)then
-                       tsnow(i,j) = 0
-                    endif
+            if (Psolid.gt.0)then
+                tsnow(i,j) = 0
+            endif
                     
 		    ! For safety, shouldn't happen
 
 		    if (Psolid.lt.0)then
-                        Psolid = 0
-                    endif	
+                 Psolid = 0
+            endif	
 
-                    !-------------------------------------------------------------------- 
+            !-------------------------------------------------------------------- 
 		    ! Calculate albedo for snow, clean ice and debris-covered ice
 		    !-------------------------------------------------------------------- 
 
@@ -296,8 +296,8 @@
 		    !!!!!! For snow and clean ice !!!!!!
 		    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                    albsnow_par = albfirn + (albsnow - albfirn)*exp(-tsnow(i,j)/tchar)
-                    albedo = albsnow_par+(albice-albsnow_par)*exp(-snowdep(i,j)/snowdepchar)
+            albsnow_par = albfirn + (albsnow - albfirn)*exp(-tsnow(i,j)/tchar)
+            albedo = albsnow_par+(albice-albsnow_par)*exp(-snowdep(i,j)/snowdepchar)
 
 		   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		   !!!!!! For sub-debris ice !!!!!!
@@ -305,13 +305,13 @@
 
 		    if (mask_deb(i,j).eq.1) then 
 		    	albedo_deb = albsnow_par+(albdeb-albsnow_par)*exp(-snowdep_deb(i,j)/snowdepchar)
-	            endif 
+	        endif 
 
-                    !-----------------------------------------------------------------------------                  
+            !-----------------------------------------------------------------------------                  
 		    ! Get debris thickness-related variables and allocate matrices if appropriate
 		    !-----------------------------------------------------------------------------
 	
-      	            if (mask_deb(i,j).eq.1)then
+      	    if (mask_deb(i,j).eq.1)then
 			if (a_deb(i,j) > 1.0e-6) then
    				debris_thickness = (th_deb(i,j)/100.0) / a_deb(i,j)
 			else
@@ -333,10 +333,10 @@
                          do jt = 1, Nt
                             Td_past(i,j,jt)=273.15
                          end do
-                      endif
+               endif
 		    end if
 
-                    !--------------------------------------------------------------------------       
+            !--------------------------------------------------------------------------       
 		    ! Calculate surface energy flux for snow, clean ice and debris-covered ice
 		    !-------------------------------------------------------------------------- 
 
@@ -351,7 +351,7 @@
                        enflux = (1.-albedo)*tau*insol+c0
                        ta_flx = c0
                     endif
-                       qnet = (1.-albedo)*tau*insol
+                    qnet = (1.-albedo)*tau*insol
 
 		   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		   !!!!!! For sub-debris ice !!!!!!
@@ -371,10 +371,10 @@
         			end if
         
         			! Net shortwave radiation energy flux to debris
-                                qnet_deb = (1.0 - albedo_deb) * tau * insol
+                            qnet_deb = (1.0 - albedo_deb) * tau * insol
            
-                                ! For snow-covered conditions over debris, debris temperature is 0 degrees through the entire profile
-                                Td(1:Nt)=273.15
+                            ! For snow-covered conditions over debris, debris temperature is 0 degrees through the entire profile
+                            Td(1:Nt)=273.15
 
                         elseif (snowdep_deb(i,j) .le. 0) then  ! No snow on debris (debris-covered ice surface)
 
@@ -389,7 +389,7 @@
                                    Td(1) = 273.15
                                 endif
                                 
-                                if(it.gt.starth.and.daysnow_deb(i,j) .eq. 1) then
+                    if(it.gt.starth.and.daysnow_deb(i,j) .eq. 1) then
             				Td(1) = Tair+273.15
         			elseif(it.gt.starth.and.daysnow_deb(i,j) .ne. 1)then
             				Td(1) = Td_past(i,j,1)
@@ -407,8 +407,8 @@
             			! Crank-Nicholson scheme for heat diffusion for first guess vertical temperature profile
             				do jt = 2, Nt-1
 
-                                                ! Crank-Nicholson coefficients
-                                                C_deb(jt) = k_eff_deb(jt) * (timestep_smb * sechr) / (2.0 * vol_heat_cap_deb(jt) * h_deb**2)
+                                ! Crank-Nicholson coefficients
+                                C_deb(jt) = k_eff_deb(jt) * (timestep_smb * sechr) / (2.0 * vol_heat_cap_deb(jt) * h_deb**2)
                 				a_Crank(jt) = C_deb(jt)
                 				b_Crank(jt) = 2.0 * C_deb(jt) + 1.0
                 				c_Crank(jt) = C_deb(jt)
@@ -420,10 +420,10 @@
                 				elseif (jt.lt.Nt-1) then
                     					d_Crank(jt) = C_deb(jt) * (Td_past(i,j,jt-1) + Td_past(i,j,jt+1)) + &
                                                         (1.0 - 2.0 * C_deb(jt)) * Td_past(i,j,jt)
-                                                endif
+                                endif
                 				if (jt.eq.Nt-1) then
                     					d_Crank(jt) = 2.0 * C_deb(jt) * Td(Nt) + &
-                                     			C_deb(jt) * Td_past(i,j,Nt-2) + (1.0 - 2.0 * C_deb(jt)) * Td_past(i,j,Nt-1)
+                                     	C_deb(jt) * Td_past(i,j,Nt-2) + (1.0 - 2.0 * C_deb(jt)) * Td_past(i,j,Nt-1)
                 				end if
 
                 				! Forward substitution in Crank-Nicholson scheme
@@ -625,7 +625,7 @@
                                            if (prec.gt.0.and.Tair.gt.ttresh) then
                                               dlhf_deb = -rhoa*Lv*C_ex*uwind*(0.622*pres*(6.112 * exp((17.67*(Td(1)-273.15))/((Td(1)-273.15)+243.5)) * &
                                                    (17.67*243.5)/((Td(1)-273.15)+243.5)**2)) / (pres - 0.378 * 6.112 * exp((17.67*(Td(1)-273.15))/ & 
-						   ((Td(1)-273.15)+243.5)))**2
+						  						   ((Td(1)-273.15)+243.5)))**2
                                            else
                                               dlhf_deb = -rhoa*Lv*C_ex*uwind*(qZ/(Tair + 273.15))
                                            endif
@@ -656,15 +656,15 @@
 
                                  end do ! End of Newton-Raphson Crank-Nicholson loop
 
-                                 enflux_deb = flx_deb
-                                 Td_gradient = (Td(1) - Td(Nt)) / debris_thickness
-				 ! Check false values
-                                 do jt = 1, Nt
-                                    if(Td(jt).eq.0)then
-				       write(*,*) 'WARNING: Td = 0 at i,j,jt,it = ', i, j, jt, it
-                                       Td(jt) = 273.15
-                                    endif
-                                end do
+                        enflux_deb = flx_deb
+                        Td_gradient = (Td(1) - Td(Nt)) / debris_thickness
+				        ! Check false values
+                         do jt = 1, Nt
+                            if(Td(jt).eq.0)then
+				       			write(*,*) 'WARNING: Td = 0 at i,j,jt,it = ', i, j, jt, it
+                                Td(jt) = 273.15
+                             endif
+                        end do
 
     			end if  ! End of snow condition over debris check
 
@@ -687,7 +687,7 @@
        
 		    end if  ! End of mask_deb check
 
-                    !--------------------------------------------------------------------  
+            !--------------------------------------------------------------------  
 		    ! Melt for snow and (sub-debris) ice
 		    !-------------------------------------------------------------------- 
 
@@ -699,11 +699,11 @@
 
 		    ! For safety, shouldn't happen
 
-                    if (melt.le.0)then
+              if (melt.le.0)then
 		       melt = 0
 		       snowmelt = 0
-                       runoff = 0
-                    endif
+               runoff = 0
+              endif
 
 		    ! Calculate meltwater production and potential retention in snow pack
 
@@ -751,8 +751,8 @@
                          endif
 
                         ! All snow-related variables are 0
-			snowmelt = 0
-			snowret(i,j) = 0
+						snowmelt = 0
+						snowret(i,j) = 0
 
                         ! Runoff is just ice melt
                         runoff = runoff + max(0.0, melt)
@@ -761,19 +761,19 @@
 			! For safety, shouldn't happen
 
 			 if (runoff.lt.0)then
-                           runoff = 0.
-                         endif
+                  runoff = 0.
+             endif
 
-                      endif
+         endif
 
-                   ! Some minor adjustments to ensure no false values occur
+          ! Some minor adjustments to ensure no false values occur
 
 		   if(melt.le.0.)then
-                     ! No melt
+               ! No melt
 		       melt = 0
 		       snowmelt = 0
-                       runoff = 0
-                    endif
+               runoff = 0
+            endif
                     
 		  ! Update snow depth over ice
 
@@ -792,7 +792,7 @@
 		  !!!!!! For sub-debris ice !!!!!!
 		  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                  if (mask_deb(i,j) .eq. 1) then  ! Check if in the debris region
+           if (mask_deb(i,j) .eq. 1) then  ! Check if in the debris region
 
 		    ! Calculate meltwater production
 
@@ -802,11 +802,11 @@
 
 		         ! For safety, shouldn't happen
 
-                         if (melt_deb.le.0)then
+                    if (melt_deb.le.0)then
 		            melt_deb = 0
 		            snowmelt_deb = 0
-                            runoff_deb = 0
-                         endif
+                    runoff_deb = 0
+                    endif
 
                         ! Snow melt
                         snowmelt_deb = min(snowdep_deb(i,j), melt_deb)
@@ -840,21 +840,22 @@
                     elseif(snowdep_deb(i,j).le.0)then
 
                        enflux_deb = k_eff_deb(Nt-1) * (Td(Nt-1) - Td(Nt)) / h_deb
+
                        if(lin_temp_grad_on.eq.1)then
                           enflux_deb = k_eff_deb(Nt-1) * ((Td(1) - 273.15) / debris_thickness)     ! Linear temperature gradient
                        endif
 
                          ! Include fractional debris-covered area for sub-debris ice melt
                          melt_deb = (1-a_deb(i,j))*max(0.0, (timestep_smb*sechr*enflux)/(rhowater*xLm)) & 
-				+ a_deb(i,j)*max(0.0, (timestep_smb*sechr*enflux_deb)/(rhowater*xLm))
+							+ a_deb(i,j)*max(0.0, (timestep_smb*sechr*enflux_deb)/(rhowater*xLm))
                        
 		         ! For safety, shouldn't happen
 
-                         if (melt_deb.le.0)then
+                    if (melt_deb.le.0)then
 		            melt_deb = 0
 		            snowmelt_deb = 0
-                            runoff_deb = 0
-                         endif
+                    runoff_deb = 0
+                    endif
 
                          ! Outflow of remaining retained water from recently disappeared snowpack     
                          if(daysnow_deb(i,j).eq.1.and.eta.ne.0)then
@@ -867,8 +868,8 @@
                          endif
 
                         ! All snow-related variables are 0
-			snowmelt_deb = 0
-			snowret_deb(i,j) = 0
+						snowmelt_deb = 0
+						snowret_deb(i,j) = 0
 
                         ! Runoff is just sub-debris ice melt due to conduction
                         runoff_deb = runoff_deb + max(0.0, melt_deb)
@@ -877,19 +878,19 @@
 			! For safety, shouldn't happen
 
 			 if (runoff_deb.lt.0)then
-                           runoff_deb = 0.
-                         endif
+                  runoff_deb = 0.
+              endif
 
-                      endif
+            endif
 
-                     ! Some minor adjustments to ensure no false values occur
+            ! Some minor adjustments to ensure no false values occur
 
 		     if(melt_deb.le.0.)then
-                       ! No melt
+                 ! No melt
 		         melt_deb = 0
 		         snowmelt_deb = 0
-                         runoff_deb = 0
-                      endif
+                 runoff_deb = 0
+                 endif
 
 		    ! Update snow depth over debris
 
@@ -909,27 +910,27 @@
                     snowdep_deb(i,j)=0.
                     melt_deb = 0.
                     runoff_deb = 0.
-		    cumbal_deb(i,j)=0
+		    		cumbal_deb(i,j)=0
 
 		  endif 
 
-                  !--------------------------------------------------------------------  
+          !--------------------------------------------------------------------  
 		  ! Save cumulative mass balance
-	          !-------------------------------------------------------------------- 
+	      !-------------------------------------------------------------------- 
 
-                    G(i,j) = cumbal(i,j)
+            G(i,j) = cumbal(i,j)
 		    G_deb(i,j) = cumbal_deb(i,j)
 
-                  !--------------------------------------------------------------------  
-		  ! Calculate time since snow event or snow cover presence
-	          !-------------------------------------------------------------------- 
+           !--------------------------------------------------------------------  
+		   ! Calculate time since snow event or snow cover presence
+	       !-------------------------------------------------------------------- 
 
-                    ! Set daysnow + timestep since last present snow cover over clean ice (for snow meltwater retention)
-                    if (snowdep(i,j).gt.0)then
-                       daysnow(i,j) = 0
-                    elseif (snowdep(i,j).le.0)then
-                       daysnow(i,j) = daysnow(i,j) + 1
-                    endif
+           ! Set daysnow + timestep since last present snow cover over clean ice (for snow meltwater retention)
+           if (snowdep(i,j).gt.0)then
+                daysnow(i,j) = 0
+           elseif (snowdep(i,j).le.0)then
+                 daysnow(i,j) = daysnow(i,j) + 1
+           endif
 
 		    ! Set days now for debris + timestep since last present snow cover over debris (for snow meltwater retention and temperature profile inside debris)
 		    if (mask_deb(i,j).eq.1) then
@@ -940,10 +941,10 @@
                         endif
 		    endif
                     
-                    ! Set tsnow + time since last snow event (for snow and firn albedo)
-                    tsnow(i,j) = tsnow(i,j) + (timestep_smb/24.0)
+            ! Set tsnow + time since last snow event (for snow and firn albedo)
+                tsnow(i,j) = tsnow(i,j) + (timestep_smb/24.0)
       
-                    ! Re-insert internal debris temperature from previous timestep
+            ! Re-insert internal debris temperature from previous timestep
                     if (mask_deb(i,j).eq.1) then
                          if(it.gt.starth)then
                               do jt = 1, Nt
@@ -971,7 +972,7 @@
 
            write(*,*),'Loop over the area done for iteration ',it, '3-hours'
 
-           !----------------------------------------------------------------------- 
+       !----------------------------------------------------------------------- 
 	   ! If at the end of the year
 	   !-----------------------------------------------------------------------  
 
@@ -983,7 +984,7 @@
               
               cumbal=0.
               snowdep=0.
-	      snowflow = 0.
+	      	  snowflow = 0.
               snowret=0.
               shade=0.
               TMA = 0.
@@ -998,9 +999,9 @@
               ice_melt = 0.
               cumbal_deb=0.
               snowdep_deb=0.
-	      snowflow_deb = 0.
+	          snowflow_deb = 0.
               snowret_deb=0.
-	      daysnow_deb=0.
+	          daysnow_deb=0.
               Td_gradient = 0.
               Td(:) = 273.15
               Td_past(:,:,:) = 273.15
@@ -1043,7 +1044,7 @@
    	   write(*,*) 'Restart the iteration'
 	endif
            
-      end do
+end do
 
-      end program
+end program
          
