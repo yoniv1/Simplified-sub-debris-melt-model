@@ -54,7 +54,6 @@ The model requires:
 - DEM
 - Glacier mask
 - Debris thickness distribution
-- 
 
 ---
 
