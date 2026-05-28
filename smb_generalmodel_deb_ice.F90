@@ -371,23 +371,23 @@
         			end if
         
         			! Net shortwave radiation energy flux to debris
-                            qnet_deb = (1.0 - albedo_deb) * tau * insol
+                    qnet_deb = (1.0 - albedo_deb) * tau * insol
            
-                            ! For snow-covered conditions over debris, debris temperature is 0 degrees through the entire profile
-                            Td(1:Nt)=273.15
+                    ! For snow-covered conditions over debris, debris temperature is 0 degrees through the entire profile
+                    Td(1:Nt)=273.15
 
-                        elseif (snowdep_deb(i,j) .le. 0) then  ! No snow on debris (debris-covered ice surface)
+                    elseif (snowdep_deb(i,j) .le. 0) then  ! No snow on debris (debris-covered ice surface)
 
         			! Initialize surface temperature iteration variables
         			n_iterations = 0
-                                Ts_past = 273.15
-                                Td(1:Nt-1) = 273.15 
+                    Ts_past = 273.15
+                    Td(1:Nt-1) = 273.15 
         			Td(Nt) = 273.15   ! Ice temperature is 0 degrees Celsius
 
         			! Set initial guess for surface temperature
-                                if (it .eq. starth)then
-                                   Td(1) = 273.15
-                                endif
+                            if (it .eq. starth)then
+                                  Td(1) = 273.15
+                             endif
                                 
                     if(it.gt.starth.and.daysnow_deb(i,j) .eq. 1) then
             				Td(1) = Tair+273.15
@@ -654,10 +654,11 @@
             					Td(1) = (Td(1) + Ts_past) / 2.0
         				end if
 
-                                 end do ! End of Newton-Raphson Crank-Nicholson loop
+                        end do ! End of Newton-Raphson Crank-Nicholson loop
 
                         enflux_deb = flx_deb
                         Td_gradient = (Td(1) - Td(Nt)) / debris_thickness
+
 				        ! Check false values
                          do jt = 1, Nt
                             if(Td(jt).eq.0)then
