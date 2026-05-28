@@ -446,7 +446,7 @@
             				end do
         			end if
 
-        			! Surface energy flux calculations for debris (first guess)
+        					! Surface energy flux calculations for debris (first guess)
                                 if(full_seb_on.eq.1)then
                                    qnet_deb = (1.0 - albedo_deb) * qsin ! (tau already included in input)
                                    lnet_deb = skyem*(stf_bltz*(Tair+273.15)**4) - em_s*(stf_bltz*(Td(1))**4)
@@ -480,7 +480,7 @@
                                    flx_deb = qnet_deb + ta_flx_deb + qc_deb
                                 endif
 
-        			! Derivative of energy fluxes with respect to surface temperature (first guess)
+        						! Derivative of energy fluxes with respect to surface temperature (first guess)
                                 if(full_seb_on.eq.1)then
                                    dqnet_deb = 0.
                                    dlnet_deb = -4*em_s*stf_bltz*Td(1)**3
@@ -528,15 +528,15 @@
 
             				! Recompute temperature profile if needed
               				if (it .eq. starth)then
-                                                Td(1) = 273.15
-                                                Td_gradient = (Td(1) - Td(Nt)) / debris_thickness
-                                                do jt = 2, Nt-1
-                                                        Td(jt) = Td(1) - (jt * h_deb) * Td_gradient
-                                                end do
-                                        endif
+                                     Td(1) = 273.15
+                                     Td_gradient = (Td(1) - Td(Nt)) / debris_thickness
+                                     do jt = 2, Nt-1
+                                         Td(jt) = Td(1) - (jt * h_deb) * Td_gradient
+                                    end do
+                            endif
                                              
-                                        if (it.gt.starth.and.daysnow_deb(i,j) .eq. 1) then
-                                                Td(1) = Tair+273.15
+                            if (it.gt.starth.and.daysnow_deb(i,j) .eq. 1) then
+                                Td(1) = Tair+273.15
                 				Td_gradient = (Td(1) - Td(Nt)) / debris_thickness
                 				do jt = 2, Nt-1
                     					Td(jt) = Td(1) - (jt * h_deb) * Td_gradient
@@ -545,8 +545,8 @@
                 				! Crank-Nicholson recalculations
                 				do jt = 2, Nt-1
 
-                                                        ! Crank-Nicholson coefficients
-                                                        C_deb(jt) = k_eff_deb(jt) * (timestep_smb * sechr) / (2.0 * vol_heat_cap_deb(jt) * h_deb**2)
+                                        ! Crank-Nicholson coefficients
+                                        C_deb(jt) = k_eff_deb(jt) * (timestep_smb * sechr) / (2.0 * vol_heat_cap_deb(jt) * h_deb**2)
                     					a_Crank(jt) = C_deb(jt)
                     					b_Crank(jt) = 2.0 * C_deb(jt) + 1.0
                                                         c_Crank(jt) = C_deb(jt)
@@ -583,7 +583,7 @@
                 				end do
             				end if
 
-					! Surface energy flux calculations for debris
+								! Surface energy flux calculations for debris
                                         if(full_seb_on.eq.1)then
                                            qnet_deb = (1.0 - albedo_deb) * qsin ! (tau already included in input)
                                            lnet_deb = skyem*(stf_bltz*(Tair+273.15)**4) - em_s*(stf_bltz*(Td(1))**4)
@@ -617,7 +617,7 @@
                                            flx_deb = qnet_deb + ta_flx_deb + qc_deb
                                         endif
 
-        				! Derivative of energy fluxes with respect to surface temperature
+        							! Derivative of energy fluxes with respect to surface temperature
                                         if(full_seb_on.eq.1)then
                                            dqnet_deb = 0.
                                            dlnet_deb = -4*em_s*stf_bltz*Td(1)**3
@@ -650,6 +650,7 @@
                                         endif
 
         				! Set maximum iterations to 100 for Newton-Raphson scheme
+
         				if (n_iterations.eq.100) then
             					Td(1) = (Td(1) + Ts_past) / 2.0
         				end if
