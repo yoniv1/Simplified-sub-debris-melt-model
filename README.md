@@ -1,4 +1,4 @@
-# Debris-covered Glacier Surface Mass Balance Model
+# Debris-covered glacier surface mass balance model
 
 A physically based surface mass balance (SMB) model for debris-covered glaciers, combining simplified and full surface energy balance (SEB) formulations with explicit debris heat conduction and internal heat storage (IHS).
 
