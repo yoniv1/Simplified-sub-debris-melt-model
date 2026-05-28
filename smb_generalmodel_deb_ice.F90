@@ -312,12 +312,12 @@
 		    !-----------------------------------------------------------------------------
 	
       	    if (mask_deb(i,j).eq.1)then
-			if (a_deb(i,j) > 1.0e-6) then
-   				debris_thickness = (th_deb(i,j)/100.0) / a_deb(i,j)
-			else
-   				debris_thickness = 0.0
-			endif		      
-		      h_deb = debris_thickness / N_layers
+				if (a_deb(i,j) > 1.0e-6) then
+   					debris_thickness = (th_deb(i,j)/100.0) / a_deb(i,j)
+				else
+   					debris_thickness = 0.0
+				endif		      
+		       h_deb = debris_thickness / N_layers
                       if (it.eq.starth) then
                         ! Initialize surface/internal debris properties
                         Td(:)=273.15
@@ -325,15 +325,15 @@
                       endif
 		      ! Debris vertical properties
 	              do jt = 1, Nt-1
-                        vol_heat_cap_deb(jt) = vhc
-                        k_eff_deb(jt) = ked
-                      end do
-                      ! Internal debris temperature of previous time step
-                      if(it.eq.starth)then
-                         do jt = 1, Nt
-                            Td_past(i,j,jt)=273.15
-                         end do
-               endif
+                     vol_heat_cap_deb(jt) = vhc
+                     k_eff_deb(jt) = ked
+                 end do
+                 ! Internal debris temperature of previous time step
+                 if(it.eq.starth)then
+                    do jt = 1, Nt
+                        Td_past(i,j,jt)=273.15
+                    end do
+                endif
 		    end if
 
             !--------------------------------------------------------------------------       
