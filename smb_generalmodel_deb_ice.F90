@@ -26,53 +26,53 @@
 !     ---------------------------                                                                                                                                                                                           
 
 !     Number of rows/cols of DEM                                                                                                                                                                                            
-      integer,parameter :: maxrow=150, maxcol=178
+      integer,parameter :: maxrow, maxcol
 
 !     Numerical resolution                                                                                                                                                                                                  
-      real,parameter    :: res=25.   
+      real,parameter    :: res   
 
 !     Timestep meteorological and insolation data                                                                                                                                                                           
-      real,parameter    :: timestep_smb = 3.        ! Hours (temporal resolution forcing data)                                                                                                                              
-      real,parameter    :: pi = 3.1415927           ! Redefined in subroutines                                                                                                                                                   
-      real,parameter    :: sechr = 3600.            ! To convert seconds into hours                                                                                                                                              
+      real,parameter    :: timestep_smb          ! Hours (temporal resolution forcing data)                                                                                                                              
+      real,parameter    :: pi                    ! Redefined in subroutines                                                                                                                                                   
+      real,parameter    :: sechr                 ! To convert seconds into hours                                                                                                                                              
 
 !     SMB parameters for clean ice                                                                                                                                                                                          
-      real,parameter    :: tau = 0.54               ! Transmissivity atmosphere (-)                                                                                                                                            
-      real,parameter    :: lat = 43.20              ! Latitude (deg)                                                                                                                                                             
-      real,parameter    :: lon = 42.76              ! Longitude (deg)                                                                                                                                                            
-      real,parameter    :: altT = 2141.             ! Altitude Terskol (m ASL)                                                                                                                                                      
-      real,parameter    :: precRate1 = 0.0023       ! Precipitation lapse rate (m w.e. yr-1 m-1)                                                                                                                                                                
-      real,parameter    :: lapseRate_w = -0.0049    ! Temperature lapse rate winter (degC m-1)                                                                                                                                        
-      real,parameter    :: lapseRate_s = -0.0067    ! Temperature lapse rate summer (degC m-1)                                                                                                                                        
-      real,parameter    :: snowdepchar = 0.011      ! Characteristic snow depth (m w.e.)                                                                                                                                             
-      real,parameter    :: ttresh = 2.              ! Threshold snow rain (degC)                                                                                                                                                   
-      real,parameter    :: ttip = 0.                ! Threshold Ta-dependent fluxes (degC)                                                                                                                                        
-      real,parameter    :: albsnow = 0.90           ! Albedo of snow (-)                                                                                                                                                       
-      real,parameter    :: c0 = -45.                ! Ta-dependent fluxes intercept (W m-2)                                                                                                                                        
-      real,parameter    :: c1 = 13.0                ! Ta-dependent fluxes slope (W m-2 degC-1)                                                                                                                                            
-      real,parameter    :: albice = 0.35            ! Albedo of ice (-)
-      real,parameter    :: albfirn = 0.50           ! Albedo of firn (-)                                                                                                                                                       
-      real,parameter    :: eta = 0.15               ! Snowpack retention capacity of water (-)                                                                                                                                 
-      real,parameter    :: tchar = 21.9             ! Timescale for decrease of snow albedo to firn albedo (days)                                                                                                                 
+      real,parameter    :: tau               ! Transmissivity atmosphere (-)                                                                                                                                            
+      real,parameter    :: lat               ! Latitude (deg)                                                                                                                                                             
+      real,parameter    :: lon               ! Longitude (deg)                                                                                                                                                            
+      real,parameter    :: altT              ! Altitude Terskol (m ASL)                                                                                                                                                      
+      real,parameter    :: precRate1         ! Precipitation lapse rate (m w.e. yr-1 m-1)                                                                                                                                                                
+      real,parameter    :: lapseRate_w       ! Temperature lapse rate winter (degC m-1)                                                                                                                                        
+      real,parameter    :: lapseRate_s       ! Temperature lapse rate summer (degC m-1)                                                                                                                                        
+      real,parameter    :: snowdepchar       ! Characteristic snow depth (m w.e.)                                                                                                                                             
+      real,parameter    :: ttresh            ! Threshold snow rain (degC)                                                                                                                                                   
+      real,parameter    :: ttip              ! Threshold Ta-dependent fluxes (degC)                                                                                                                                        
+      real,parameter    :: albsnow           ! Albedo of snow (-)                                                                                                                                                       
+      real,parameter    :: c0                ! Ta-dependent fluxes intercept (W m-2)                                                                                                                                        
+      real,parameter    :: c1                ! Ta-dependent fluxes slope (W m-2 degC-1)                                                                                                                                            
+      real,parameter    :: albice            ! Albedo of ice (-)
+      real,parameter    :: albfirn           ! Albedo of firn (-)                                                                                                                                                       
+      real,parameter    :: eta               ! Snowpack retention capacity of water (-)                                                                                                                                 
+      real,parameter    :: tchar             ! Timescale for decrease of snow albedo to firn albedo (days)                                                                                                                 
 
 !     SMB parameters for debris-covered ice                                                                                                                                                                                 
-      real,parameter     :: albdeb = 0.10            ! Albedo for debris (-)                                                                                                                                                    
-      real,parameter     :: d0 = -60.                ! Ta-Ts-dependent fluxes intercept (W m-2)                                                                                                                                    
-      real,parameter     :: d1 = 36.                 ! Ta-Ts-dependent fluxes slope (W m-2 degC-1)                                                                                                                                        
-      integer, parameter :: N_layers = 10            ! Number of layers for vertical debris discretization (-)                                                                                                                 
-      integer, parameter :: Nt = N_layers + 1        ! Vertical discretization debris pack (-)                                                                                                                                 
-      real,parameter     :: vhc = 1.5E6              ! Effective volumetric heat capacity debris (J m-3 degC-1)                                                                                                                           
-      real,parameter     :: ked = 1.8                ! Effective thermal conductivity debris (W m-1 degC-1)                                                                                                                               
+      real,parameter     :: albdeb             ! Albedo for debris (-)                                                                                                                                                    
+      real,parameter     :: d0                 ! Ta-Ts-dependent fluxes intercept (W m-2)                                                                                                                                    
+      real,parameter     :: d1                 ! Ta-Ts-dependent fluxes slope (W m-2 degC-1)                                                                                                                                        
+      integer, parameter :: N_layers           ! Number of layers for vertical debris discretization (-)                                                                                                                 
+      integer, parameter :: Nt = N_layers + 1  ! Vertical discretization debris pack (-)                                                                                                                                 
+      real,parameter     :: vhc                ! Effective volumetric heat capacity debris (J m-3 degC-1)                                                                                                                           
+      real,parameter     :: ked                ! Effective thermal conductivity debris (W m-1 degC-1)                                                                                                                               
 
 !     SMB paramteres for full surface debris-covered ice energy balance                                                                                                                                                     
-      real, parameter    :: rhoa = 1.29              ! Air density (kg m-3)                                                                                                                                                 
-      real, parameter    :: cA = 1010.0              ! Specific heat capacity of air (J kg-1 degC-1)                                                                                                                           
-      real, parameter    :: C_ex = 0.004             ! Bulk exchange coefficient over debris (-)                                                                                                                            
-      real, parameter    :: Lv = 2.49e6              ! Latent heat of vaporization (J kg-1)                                                                                                                                 
-      real, parameter    :: cW = 4184.0              ! Specific heat capacity of water (J kg-1 degC-1)                                                                                                                         
-      real, parameter    :: rhow = 1000.0            ! Density of water (kg m-3)                                                                                                                                            
-      real, parameter    :: em_s = 0.95              ! Debris surface emissivity (-)                                                                                                                                        
-      real, parameter    :: stf_bltz = 5.6703744e-8  ! Stefan-Boltzmann constant (W m-2 K-4)                                                                                                                                
+      real, parameter    :: rhoa               ! Air density (kg m-3)                                                                                                                                                 
+      real, parameter    :: cA                 ! Specific heat capacity of air (J kg-1 degC-1)                                                                                                                           
+      real, parameter    :: C_ex               ! Bulk exchange coefficient over debris (-)                                                                                                                            
+      real, parameter    :: Lv                 ! Latent heat of vaporization (J kg-1)                                                                                                                                 
+      real, parameter    :: cW                 ! Specific heat capacity of water (J kg-1 degC-1)                                                                                                                         
+      real, parameter    :: rhow               ! Density of water (kg m-3)                                                                                                                                            
+      real, parameter    :: em_s               ! Debris surface emissivity (-)                                                                                                                                        
+      real, parameter    :: stf_bltz           ! Stefan-Boltzmann constant (W m-2 K-4)                                                                                                                                
 
 ! ---------------------------------------------------------------------
 ! Choose the model complexity that is desired
