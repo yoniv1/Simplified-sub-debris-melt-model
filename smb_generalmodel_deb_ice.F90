@@ -6,7 +6,7 @@
 !-----------------------------------------------------------------------
 ! Program: SMB model for Djankuat Glacier
 !          Calculates clean-ice and debris-covered SMB using simplified
-!          SEB and vertical debris heat conduction.
+!          SEB and vertical debris heat conduction by using ELEV_OBS (DEM).
 ! Main configuration:
 !   full_seb_on      = 0/1    (Include or exclude full energy balance calculation)
 !   lin_temp_grad_on = 0/1    (Include or exclude internal heat storage within debris pack)
@@ -35,7 +35,7 @@
       real,parameter    :: timestep_smb        ! Hours (temporal resolution forcing data)                                                                                                                              
       real,parameter    :: pi                  ! Redefined in subroutines                                                                                                                                                   
       real,parameter    :: sechr               ! To convert seconds into hours          
-      integer,parameter :: dims                ! Size of climatic data array (amount of 3-hourly data)
+      integer,parameter :: dims                ! Size of climatic data array (amount of 3-hourly data
 
 !     SMB parameters for clean ice                                                                                                                                                                                          
       real,parameter    :: tau                 ! Transmissivity atmosphere (-)                                                                                                                                            
