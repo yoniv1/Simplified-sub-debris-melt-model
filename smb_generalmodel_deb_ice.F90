@@ -32,28 +32,29 @@
       real,parameter    :: res   
 
 !     Timestep meteorological and insolation data                                                                                                                                                                           
-      real,parameter    :: timestep_smb          ! Hours (temporal resolution forcing data)                                                                                                                              
-      real,parameter    :: pi                    ! Redefined in subroutines                                                                                                                                                   
-      real,parameter    :: sechr                 ! To convert seconds into hours                                                                                                                                              
+      real,parameter    :: timestep_smb         ! Hours (temporal resolution forcing data)                                                                                                                              
+      real,parameter    :: pi                   ! Redefined in subroutines                                                                                                                                                   
+      real,parameter    :: sechr                ! To convert seconds into hours          
+      integer,parameter :: dims                 ! Size of climatic data array (amount of 3-hourly data)
 
 !     SMB parameters for clean ice                                                                                                                                                                                          
-      real,parameter    :: tau               ! Transmissivity atmosphere (-)                                                                                                                                            
-      real,parameter    :: lat               ! Latitude (deg)                                                                                                                                                             
-      real,parameter    :: lon               ! Longitude (deg)                                                                                                                                                            
-      real,parameter    :: altT              ! Altitude Terskol (m ASL)                                                                                                                                                      
-      real,parameter    :: precRate1         ! Precipitation lapse rate (m w.e. yr-1 m-1)                                                                                                                                                                
-      real,parameter    :: lapseRate_w       ! Temperature lapse rate winter (degC m-1)                                                                                                                                        
-      real,parameter    :: lapseRate_s       ! Temperature lapse rate summer (degC m-1)                                                                                                                                        
-      real,parameter    :: snowdepchar       ! Characteristic snow depth (m w.e.)                                                                                                                                             
-      real,parameter    :: ttresh            ! Threshold snow rain (degC)                                                                                                                                                   
-      real,parameter    :: ttip              ! Threshold Ta-dependent fluxes (degC)                                                                                                                                        
-      real,parameter    :: albsnow           ! Albedo of snow (-)                                                                                                                                                       
-      real,parameter    :: c0                ! Ta-dependent fluxes intercept (W m-2)                                                                                                                                        
-      real,parameter    :: c1                ! Ta-dependent fluxes slope (W m-2 degC-1)                                                                                                                                            
-      real,parameter    :: albice            ! Albedo of ice (-)
-      real,parameter    :: albfirn           ! Albedo of firn (-)                                                                                                                                                       
-      real,parameter    :: eta               ! Snowpack retention capacity of water (-)                                                                                                                                 
-      real,parameter    :: tchar             ! Timescale for decrease of snow albedo to firn albedo (days)                                                                                                                 
+      real,parameter    :: tau                 ! Transmissivity atmosphere (-)                                                                                                                                            
+      real,parameter    :: lat                 ! Latitude (deg)                                                                                                                                                             
+      real,parameter    :: lon                 ! Longitude (deg)                                                                                                                                                            
+      real,parameter    :: altT                ! Altitude Terskol (m ASL)                                                                                                                                                      
+      real,parameter    :: precRate1           ! Precipitation lapse rate (m w.e. yr-1 m-1)                                                                                                                                                                
+      real,parameter    :: lapseRate_w         ! Temperature lapse rate winter (degC m-1)                                                                                                                                        
+      real,parameter    :: lapseRate_s         ! Temperature lapse rate summer (degC m-1)                                                                                                                                        
+      real,parameter    :: snowdepchar         ! Characteristic snow depth (m w.e.)                                                                                                                                             
+      real,parameter    :: ttresh              ! Threshold snow rain (degC)                                                                                                                                                   
+      real,parameter    :: ttip                ! Threshold Ta-dependent fluxes (degC)                                                                                                                                        
+      real,parameter    :: albsnow             ! Albedo of snow (-)                                                                                                                                                       
+      real,parameter    :: c0                  ! Ta-dependent fluxes intercept (W m-2)                                                                                                                                        
+      real,parameter    :: c1                  ! Ta-dependent fluxes slope (W m-2 degC-1)                                                                                                                                            
+      real,parameter    :: albice              ! Albedo of ice (-)
+      real,parameter    :: albfirn             ! Albedo of firn (-)                                                                                                                                                       
+      real,parameter    :: eta                 ! Snowpack retention capacity of water (-)                                                                                                                                 
+      real,parameter    :: tchar               ! Timescale for decrease of snow albedo to firn albedo (days)                                                                                                                 
 
 !     SMB parameters for debris-covered ice                                                                                                                                                                                 
       real,parameter     :: albdeb             ! Albedo for debris (-)                                                                                                                                                    
@@ -78,9 +79,9 @@
 ! Choose the model complexity that is desired
 ! ---------------------------------------------------------------------
 
-        lin_temp_grad_on = 0           ! Linear temperature gradient in the debris pack = 1, else 0
-        full_seb_on = 0                ! Full energy balance calculation = 1, else 0
-        patchy_deb_on = 0              ! Patchy debris cover parameterization = 1, else 0
+        lin_temp_grad_on = 0                  ! Linear temperature gradient in the debris pack = 1, else 0
+        full_seb_on = 0                       ! Full energy balance calculation = 1, else 0
+        patchy_deb_on = 0                     ! Patchy debris cover parameterization = 1, else 0
              
 !-----------------------------------------------------------------------     
 !---Initialise matrices, set everything to zero                             
