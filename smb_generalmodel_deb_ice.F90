@@ -26,16 +26,16 @@
 !     ---------------------------                                                                                                                                                                                           
 
 !     Number of rows/cols of DEM                                                                                                                                                                                            
-      integer,parameter :: maxrow, maxcol
+      integer,parameter :: maxrow, maxcol      ! Domain size (number of pixels in rows, columns)
 
 !     Numerical resolution                                                                                                                                                                                                  
-      real,parameter    :: res   
+      real,parameter    :: res                 ! Spatial resolution (m)
 
 !     Timestep meteorological and insolation data                                                                                                                                                                           
-      real,parameter    :: timestep_smb         ! Hours (temporal resolution forcing data)                                                                                                                              
-      real,parameter    :: pi                   ! Redefined in subroutines                                                                                                                                                   
-      real,parameter    :: sechr                ! To convert seconds into hours          
-      integer,parameter :: dims                 ! Size of climatic data array (amount of 3-hourly data)
+      real,parameter    :: timestep_smb        ! Hours (temporal resolution forcing data)                                                                                                                              
+      real,parameter    :: pi                  ! Redefined in subroutines                                                                                                                                                   
+      real,parameter    :: sechr               ! To convert seconds into hours          
+      integer,parameter :: dims                ! Size of climatic data array (amount of 3-hourly data)
 
 !     SMB parameters for clean ice                                                                                                                                                                                          
       real,parameter    :: tau                 ! Transmissivity atmosphere (-)                                                                                                                                            
@@ -184,7 +184,7 @@
                  ! Start spatial SMB loop only over ice-covered pixels                    
                  !-----------------------------------------------------------------------    
 
-                 if (mask_new(i,j).eq.1) then
+                 if (mask_new(i,j).eq.1) then    ! Only for ice-covered grid cells
                  
                  ! Initialize for new loop
 
@@ -960,13 +960,6 @@
 
                    G(i,j) = 0
                    G_deb(i,j) = 0
-                   TMA(i,j) = 0
-                   ALB(i,j) = 0
-                   cumsnow(i,j) = 0
-                   shading(i,j) = 0
-                   SOLAR(i,j) = 0
-                   eng_flux(i,j) = 0
-                   qnet_flux_out(i,j) = 0
                     
                  endif                 
                  
@@ -990,14 +983,9 @@
 	      	  snowflow = 0.
               snowret=0.
               shade=0.
-              TMA = 0.
-              sir = 0.
-              ALB = 0.
               cumsnow = 0.
               shading = 0.
               daysnow = 0.
-              SOLAR = 0.
-              eng_flux = 0.
               qnet_flux_out = 0.
               ice_melt = 0.
               cumbal_deb=0.
