@@ -171,7 +171,7 @@
               e_val=0.
            end if
            
-           call shaderoutine(solaralt,azimuth,HT,shade) ! Call subroutine to calculate if there is shade in each grid cell from topographic shading       
+           call shaderoutine(solaralt,azimuth,ELEV_OBS,shade) ! Call subroutine to calculate if there is shade in each grid cell from topographic shading       
                      
        !-----------------------------------------------------------------------             
 	   ! Start the loop over the area
